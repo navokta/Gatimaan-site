@@ -1,10 +1,21 @@
-import React from 'react'
-import Carousel from '../components/home-page/Carousel'
+import React from "react";
+import Carousel from "../components/home-page/Carousel";
+import Course from "../components/home-page/Course";
+import Feed from "../components/home-page/Feed";
+import Scroll from "../components/home-page/Horizontal_scrolling";
+import Testimonial from "../components/home-page/Testimonial";
+import Courses from "./Courses";
 
 const Home = () => {
   return (
-    <Carousel />
-  )
-}
+    <div>
+      <Carousel />
+      <Feed />
+      <Scroll />
+      <Testimonial />
+      {/* <Course /> */}
+    </div>
+  );
+};
 
-export default Home
+export default Home;
