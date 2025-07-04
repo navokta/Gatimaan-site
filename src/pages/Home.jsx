@@ -5,15 +5,16 @@ import Feed from "../components/home-page/Feed";
 import Scroll from "../components/home-page/Horizontal_scrolling";
 import Testimonial from "../components/home-page/Testimonial";
 import Courses from "./Courses";
+import CoursesSection from "../components/home-page/Course";
 
 const Home = () => {
   return (
     <div>
       <Carousel />
+      <CoursesSection />
       <Feed />
       <Scroll />
       <Testimonial />
-      {/* <Course /> */}
     </div>
   );
 };
