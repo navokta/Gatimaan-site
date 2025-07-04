@@ -57,6 +57,9 @@ const CourseList = () => {
               <a href={`/courses/${course._id}`} className="course-button">
                 Read more →
               </a>
+              <a href={`/admin/edit-course/${course._id}`} className="course-button">
+                edit →
+              </a>
             </div>
           </div>
         ))}

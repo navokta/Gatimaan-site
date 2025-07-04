@@ -12,6 +12,9 @@ import About from './pages/About';
 import Courses from './pages/Courses';
 import Contact from './pages/Contact';
 import CourseDetails from './components/courses-page/ReadMore'; // Adjust path if needed
+import Addcourse from './components/Admin/Addcourse'
+import Editcourse from './components/Admin/Editcourse'
+
 
 const router = createBrowserRouter([
   {
@@ -71,6 +74,22 @@ const router = createBrowserRouter([
       <Header />
       <CourseDetails />
       <Footer />
+    </>
+  ),
+},
+{
+  path: "/admin/add-courses",
+  element: (
+    <>
+      <Addcourse />
+    </>
+  ),
+},
+{
+  path: "/admin/edit-course/:id",
+  element: (
+    <>
+      <Editcourse />
     </>
   ),
 }
