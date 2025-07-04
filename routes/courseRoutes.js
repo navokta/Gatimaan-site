@@ -128,18 +128,30 @@ router.get('/api/courses', async (req, res) => {
 
 
 
-// ⚠️ View Single Course (keep last)
+// ✅ Must come before "/:id"
+router.get('/api', async (req, res) => {
+  try {
+    const courses = await Course.find();
+    res.json(courses); // Proper API response
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error while fetching courses' });
+  }
+});
+
+// ⚠️ KEEP THIS LAST
 router.get('/:id', async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
     if (!course) return res.status(404).send('Course not found');
 
-    res.render('layout/course-view-page', { course, currentPath: req.path });
+    res.render('layout/course-view-page', { course });
   } catch (err) {
     console.error(err);
     res.status(500).send('Server Error');
   }
 });
+
 
 
 export default router;

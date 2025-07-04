@@ -1,7 +1,23 @@
-import React from 'react';
-import './Courses.css'; // Add CSS styles here
+import React, { useEffect, useState } from 'react';
+import './Courses.css';
 
-const CourseList = ({ courses = [] }) => {
+const CourseList = () => {
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/courses/api'); // ✅ Backend API endpoint
+        const data = await response.json();
+        setCourses(data);
+      } catch (error) {
+        console.error('❌ Error fetching courses:', error);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
   return (
     <div className="course-container">
       <div className="course-header">
@@ -14,10 +30,7 @@ const CourseList = ({ courses = [] }) => {
           <div className="course-card" key={course._id}>
             <div className="course-image-container">
               <img
-                src={
-                  course.imageUrl ||
-                  'https://source.unsplash.com/random/600x400?education'
-                }
+                src={course.imageUrl || 'https://source.unsplash.com/random/600x400?education'}
                 alt={course.title}
                 className="course-image"
               />
