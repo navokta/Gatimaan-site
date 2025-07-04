@@ -1,15 +1,16 @@
-const express = require('express');
-const Course = require('../models/courses.model');
+// ./routes/courseRoutes.js (ESM Compatible)
+
+import express from 'express';
+import Course from '../models/courses.model.js';
+
 const router = express.Router();
 
-// ✅ Specific routes first
-
-// GET /courses/admin/add — Show add course form
+// ✅ Show Add Course Form
 router.get('/admin/add', (req, res) => {
   res.render('admin/add-courses', { error: null, success: null });
 });
 
-// POST /courses/admin/add — Handle form submission
+// ✅ Handle Add Course Form Submission
 router.post('/admin/add', async (req, res) => {
   const {
     imageUrl = '',
@@ -18,7 +19,6 @@ router.post('/admin/add', async (req, res) => {
     longDesciption = '',
     adminPassword = ''
   } = req.body;
-
 
   if (adminPassword !== process.env.ADMIN_PASSWORD) {
     return res.render('admin/add-courses', {
@@ -42,28 +42,13 @@ router.post('/admin/add', async (req, res) => {
       success: 'Course added successfully!',
       body: {}
     });
-  } catch (error) { // 🔥 Handle errors here instead of inside try/catch block
-    console.error(error); // 🔥 Log the error for debugging
+  } catch (error) {
+    console.error(error);
     res.status(500).send('Server Error');
   }
 });
 
-  // if (error.name === 'ValidationError') {
-  //     const errors = {};
-  //     for (let [key, value] of Object.entries(err.errors)) {
-  //       errors[key] = value.message;
-  //     }
-
-  //     return res.render('admin/add-courses', {
-  //       error: 'Validation failed',
-  //       errors: errors,
-  //       body: req.body
-  //     });
-  //   }
-
-// 🟡 General routes
-
-// GET /courses — Render all courses
+// ✅ List All Courses
 router.get('/', async (req, res) => {
   try {
     const courses = await Course.find();
@@ -74,8 +59,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// ⚠️ This must come LAST
-// GET /courses/:id — View single course
+// ⚠️ View Single Course (keep last)
 router.get('/:id', async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
@@ -88,8 +72,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-
-// GET /courses/admin/edit/:id — Show edit form
+// ✅ Show Edit Form
 router.get('/admin/edit/:id', async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
@@ -102,7 +85,7 @@ router.get('/admin/edit/:id', async (req, res) => {
   }
 });
 
-// POST /courses/admin/edit/:id — Handle form submission
+// ✅ Handle Edit Submission
 router.post('/admin/edit/:id', async (req, res) => {
   const {
     imageUrl = '',
@@ -112,8 +95,9 @@ router.post('/admin/edit/:id', async (req, res) => {
     adminPassword = ''
   } = req.body;
 
+  const course = await Course.findById(req.params.id);
+
   if (adminPassword !== process.env.ADMIN_PASSWORD) {
-    const course = await Course.findById(req.params.id);
     return res.render('admin/edit-course', {
       course,
       error: 'Invalid admin password',
@@ -121,7 +105,6 @@ router.post('/admin/edit/:id', async (req, res) => {
   }
 
   if (!imageUrl || !title || !shortDescription || !longDesciption) {
-    const course = await Course.findById(req.params.id);
     return res.render('admin/edit-course', {
       course,
       error: 'All fields are required',
@@ -136,12 +119,11 @@ router.post('/admin/edit/:id', async (req, res) => {
       longDesciption
     });
 
-    res.redirect('/'); // Or redirect to `/courses/${req.params.id}` if you want
+    res.redirect('/');
   } catch (err) {
     console.error(err);
     res.status(500).send('Server Error');
   }
 });
 
-
-module.exports = router;
+export default router;

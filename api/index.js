@@ -1,15 +1,22 @@
-const express = require('express');
-const path = require('path');
-const cors = require('cors');
-require('dotenv').config();
-const mongoose = require('mongoose');
+import express from 'express';
+import path from 'path';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+import { fileURLToPath } from 'url';
 
-const courseRoutes = require('../routes/courseRoutes');
-const newsRouter = require('../routes/newsRoutes');
-const News = require('../models/News');
-const Course = require('../models/courses.model');
+import courseRoutes from '../routes/courseRoutes.js';
+import newsRouter from '../routes/newsRoutes.js';
+import News from '../models/News.js';
+import Course from '../models/courses.model.js';
+
+dotenv.config();
 
 const app = express();
+
+// Required to resolve __dirname in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ Connected to MongoDB'))
@@ -80,4 +87,4 @@ app.get('/news', async (req, res) => {
   }
 });
 
-module.exports = app;
+export default app;

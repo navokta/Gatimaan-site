@@ -1,6 +1,6 @@
-// ./models/courses.model.js
+// ./models/courses.model.js (✅ ESM format)
 
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const courseSchema = new mongoose.Schema({
   imageUrl: {
@@ -15,10 +15,12 @@ const courseSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  longDesciption:{
+  longDesciption: {
     type: String,
-    required:true
+    required: true
   },
 }, { timestamps: true });
 
-module.exports = mongoose.model('Course', courseSchema, 'Courses');
+const Course = mongoose.model('Course', courseSchema, 'Courses');
+
+export default Course; // ✅ ES Module export

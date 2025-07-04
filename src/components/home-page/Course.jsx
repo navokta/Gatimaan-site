@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom"; // If using React Router
-// import "aos/dist/aos.css"; // AOS CSS
-// import AOS from "aos";
+import "aos/dist/aos.css"; // AOS CSS
+import AOS from "aos";
 import { useEffect } from "react";
 
 const CoursesSection = ({ courses = [] }) => {
