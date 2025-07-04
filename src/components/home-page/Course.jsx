@@ -1,12 +1,27 @@
-import React from "react";
-import { Link } from "react-router-dom"; // If using React Router
-import "aos/dist/aos.css"; // AOS CSS
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import "aos/dist/aos.css";
 import AOS from "aos";
-import { useEffect } from "react";
+import './Course.css'
 
-const CoursesSection = ({ courses = [] }) => {
+const CoursesSection = () => {
+  const [courses, setCourses] = useState([]);
+
   useEffect(() => {
     AOS.init({ duration: 800 });
+
+    // Fetch courses from backend
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/courses/api/courses");
+        const data = await response.json();
+        setCourses(data);
+      } catch (error) {
+        console.error("❌ Failed to fetch courses:", error);
+      }
+    };
+
+    fetchCourses();
   }, []);
 
   return (

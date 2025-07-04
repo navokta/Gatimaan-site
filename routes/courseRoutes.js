@@ -48,24 +48,12 @@ router.post('/admin/add', async (req, res) => {
   }
 });
 
+
 // ✅ List All Courses
 router.get('/', async (req, res) => {
   try {
     const courses = await Course.find();
     res.render('components/courses', { courses });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server Error');
-  }
-});
-
-// ⚠️ View Single Course (keep last)
-router.get('/:id', async (req, res) => {
-  try {
-    const course = await Course.findById(req.params.id);
-    if (!course) return res.status(404).send('Course not found');
-
-    res.render('layout/course-view-page', { course, currentPath: req.path });
   } catch (err) {
     console.error(err);
     res.status(500).send('Server Error');
@@ -125,5 +113,33 @@ router.post('/admin/edit/:id', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
+
+// ✅ API route for frontend (JSON response)
+router.get('/api/courses', async (req, res) => {
+  try {
+    const courses = await Course.find().sort({ createdAt: -1 });
+    res.json(courses);
+  } catch (err) {
+    console.error('❌ Failed to fetch courses:', err.message);
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
+
+
+
+// ⚠️ View Single Course (keep last)
+router.get('/:id', async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+    if (!course) return res.status(404).send('Course not found');
+
+    res.render('layout/course-view-page', { course, currentPath: req.path });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
+
 
 export default router;
