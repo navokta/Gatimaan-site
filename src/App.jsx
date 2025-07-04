@@ -4,74 +4,80 @@ import {
   createBrowserRouter,
   RouterProvider
 } from 'react-router-dom';
+
 import Header from './components/common/Header';
-import Footer from './components/common/Footer'
+import Footer from './components/common/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import Courses from './pages/Courses';
 import Contact from './pages/Contact';
+import CourseDetails from './components/courses-page/ReadMore'; // Adjust path if needed
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <div>
+      <>
         <Header />
         <Home />
         <Footer />
-      </div>
+      </>
     ),
   },
   {
     path: "/layout/about",
     element: (
-      <div>
+      <>
         <Header />
         <About />
         <Footer />
-      </div>
+      </>
     ),
   },
   {
     path: "/layout/courses",
     element: (
-      <div>
+      <>
         <Header />
         <Courses />
         <Footer />
-      </div>
+      </>
     ),
   },
   {
-    path: "/Contact",
+    path: "/contact",
     element: (
-      <div>
+      <>
         <Header />
         <Contact />
         <Footer />
-      </div>
+      </>
     ),
   },
   {
     path: "/layout/contact",
     element: (
-      <div>
+      <>
         <Header />
         <Contact />
         <Footer />
-      </div>
+      </>
     ),
-  }
+  },
+  {
+  path: "/courses/:id",
+  element: (
+    <>
+      <Header />
+      <CourseDetails />
+      <Footer />
+    </>
+  ),
+}
 ]);
 
 function App() {
- 
-
-  return (
-    <>
-     <RouterProvider router={router} />
-    </>
-  )
+  return <RouterProvider router={router} />
 }
 
-export default App
+export default App;
