@@ -153,5 +153,18 @@ router.get('/:id', async (req, res) => {
 });
 
 
+// backend: routes/courseRoutes.js
+router.get('/api/:id', async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+    if (!course) return res.status(404).json({ error: 'Course not found' });
+    res.json(course);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+
 
 export default router;
