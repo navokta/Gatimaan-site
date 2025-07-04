@@ -6,12 +6,15 @@ import Scroll from "../components/home-page/Horizontal_scrolling";
 import Testimonial from "../components/home-page/Testimonial";
 import Courses from "./Courses";
 import CoursesSection from "../components/home-page/Course";
+import NewsSection from "../components/home-page/News";
+
 
 const Home = () => {
   return (
     <div>
       <Carousel />
       <CoursesSection />
+      <NewsSection />
       <Feed />
       <Scroll />
       <Testimonial />
