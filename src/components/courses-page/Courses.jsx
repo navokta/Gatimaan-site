@@ -57,7 +57,7 @@ const CourseList = () => {
                 </div>
               </div>
 
-              <Link to={`${BASE_URL}/courses/${course._id}`} className="course-button">
+              <Link to={`/courses/${course._id}`} className="course-button">
                 Read more →
               </Link>
             </div>
