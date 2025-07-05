@@ -44,50 +44,43 @@ const CoursesSection = () => {
         ) : courses.length > 0 ? (
           <>
             <div className="courses-container">
-              {courses.slice(0, 6).map((course, index) => (
-                <div
-                  className="course-card-wrapper"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                  key={course._id}
-                  data-aos="fade-up"
-                  data-aos-delay={index * 50}
-                >
-                  <div className="course-card">
-                    <div className="image-container">
-                      <img
-                        src={course.imageUrl || "https://placehold.co/600x400"}
-                        className="course-image"
-                        alt={course.title}
-                        loading="lazy"
-                      />
-                      {/* <div className="course-badge">Popular</div> */}
-                    </div>
-                    <div className="card-body">
-                      {/* <div className="course-meta">
-                        <span className="course-level">{course.level || 'Beginner'}</span>
-                        <span className="course-duration">• {course.duration || '4 weeks'}</span>
-                      </div> */}
-                      <h5 className="card-title">{course.title}</h5>
-                      <p className="card-text">
-                        {course.shortDescription}
-                      </p>
-                      <div className="card-footer">
-                        <Link
-                          to={`/courses/${course._id}`}
-                          className="read-more-btn"
-                        >
-                          Explore Course
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                          </svg>
-                        </Link>
-                        {/* <span className="course-price">${course.price || '49.99'}</span> */}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+  {[...courses]
+    .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)) // Oldest First
+    .slice(0, 6)
+    .map((course, index) => (
+      <div
+        className="course-card-wrapper"
+        style={{ animationDelay: `${index * 0.1}s` }}
+        key={course._id}
+        data-aos="fade-up"
+        data-aos-delay={index * 50}
+      >
+        <div className="course-card">
+          <div className="image-container">
+            <img
+              src={course.imageUrl || "https://placehold.co/600x400"}
+              className="course-image"
+              alt={course.title}
+              loading="lazy"
+            />
+          </div>
+          <div className="card-body">
+            <h5 className="card-title">{course.title}</h5>
+            <p className="card-text">{course.shortDescription}</p>
+            <div className="card-footer">
+              <Link to={`/courses/${course._id}`} className="read-more-btn">
+                Explore Course
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </Link>
             </div>
+          </div>
+        </div>
+      </div>
+    ))}
+</div>
+
 
             <div className="explore-more" data-aos="fade-up">
               <Link to="/layout/courses" className="explore-btn">
