@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./NewsList.css";
 
+const BASE_URL = import.meta.env.VITE_API_BASE || "https://gatimaan-site.onrender.com";
+
 const NewsList = () => {
   const [newsList, setNewsList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -9,7 +11,7 @@ const NewsList = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/news");
+        const res = await fetch(`${BASE_URL}/api/news`);
         const data = await res.json();
         setNewsList(data);
         setLoading(false);
