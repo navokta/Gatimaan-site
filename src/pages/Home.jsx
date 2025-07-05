@@ -7,6 +7,7 @@ import Testimonial from "../components/home-page/Testimonial";
 import Courses from "./Courses";
 import CoursesSection from "../components/home-page/Course";
 import NewsSection from "../components/home-page/News";
+import WhatsappIcon from "../components/common/Whatsappicon";
 
 
 const Home = () => {
@@ -18,6 +19,7 @@ const Home = () => {
       <Feed />
       <Scroll />
       <Testimonial />
+      <WhatsappIcon />
     </div>
   );
 };

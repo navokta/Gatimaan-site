@@ -161,3 +161,6 @@
     transition: opacity 0.3s ease;
   } */
 
+#topBtn {
+  right: 25px !important;
+}
