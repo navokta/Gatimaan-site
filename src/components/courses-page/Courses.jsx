@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Courses.css';
+import { Link } from 'react-router-dom';
 
 const BASE_URL = import.meta.env.VITE_API_BASE || "https://gatimaan-site.onrender.com";
 
@@ -56,9 +57,9 @@ const CourseList = () => {
                 </div>
               </div>
 
-              <a href={`/courses/${course._id}`} className="course-button">
+              <Link to={`${BASE_URL}/courses/${course._id}`} className="course-button">
                 Read more →
-              </a>
+              </Link>
             </div>
           </div>
         ))}
