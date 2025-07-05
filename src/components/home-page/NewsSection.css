@@ -281,3 +281,19 @@
   outline: none;
   box-shadow: 0 0 0 4px rgba(72, 180, 97, 0.5);
 }
+
+.gc-desktop-only {
+  display: block;
+}
+.gc-mobile-only {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .gc-desktop-only {
+    display: none;
+  }
+  .gc-mobile-only {
+    display: block;
+  }
+}

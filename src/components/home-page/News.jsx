@@ -1,5 +1,5 @@
 import React from 'react';
-import './NewsSection.css'; // Include your styles
+import './NewsSection.css';
 import { Link } from 'react-router-dom';
 
 const NewsSection = ({ newsList = [] }) => {
@@ -25,7 +25,7 @@ const NewsSection = ({ newsList = [] }) => {
           {limitedNews.length > 0 ? (
             <>
               {/* Desktop Table View */}
-              <div className="gc-news-table-container">
+              <div className="gc-news-table-container gc-desktop-only">
                 <table className="gc-news-table">
                   <thead>
                     <tr>
@@ -53,13 +53,8 @@ const NewsSection = ({ newsList = [] }) => {
                               className="gc-news-link"
                             >
                               View Details
-                              <svg
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                   xmlns="http://www.w3.org/2000/svg">
                                 <path
                                   d="M5 12H19M19 12L12 5M19 12L12 19"
                                   stroke="currentColor"
@@ -78,7 +73,7 @@ const NewsSection = ({ newsList = [] }) => {
               </div>
 
               {/* Mobile Card View */}
-              <div className="gc-news-cards">
+              <div className="gc-news-cards gc-mobile-only">
                 {limitedNews.map((news, index) => {
                   const dateObj = new Date(news.createdAt);
                   return (
@@ -99,13 +94,8 @@ const NewsSection = ({ newsList = [] }) => {
                           className="gc-card-link"
                         >
                           View Details
-                          <svg
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                               xmlns="http://www.w3.org/2000/svg">
                             <path
                               d="M5 12H19M19 12L12 5M19 12L12 19"
                               stroke="currentColor"

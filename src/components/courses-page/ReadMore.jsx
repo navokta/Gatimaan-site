@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './ReadMore.css';
+import CEOIMG from '../../assets/CEO image-modified.png';
 
 const BASE_URL = import.meta.env.VITE_API_BASE || "https://gatimaan-site.onrender.com";
 
@@ -115,7 +116,7 @@ const CourseDetails = () => {
           <div className="consultant-box">
             <h3>About the Consultant</h3>
             <div className="consultant-info">
-              <img src="/images/CEO image-modified.png" alt="Instructor" />
+              <img src={CEOIMG} alt="Instructor" />
               <div>
                 <h4>Dr. Bharat Bhushan Sharma</h4>
                 <p>Teaching Experience of 8+ Years</p>
