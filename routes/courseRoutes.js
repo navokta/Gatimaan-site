@@ -60,20 +60,23 @@ router.get('/', async (req, res) => {
   }
 });
 
-// ✅ Show Edit Form
+// ✅ Get Course by ID for Edit (API)
 router.get('/admin/edit/:id', async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
-    if (!course) return res.status(404).send('Course not found');
+    if (!course) {
+      return res.status(404).json({ success: false, message: 'Course not found' });
+    }
 
-    res.render('admin/edit-course', { course, error: null });
+    res.status(200).json({ success: true, course });
   } catch (err) {
-    console.error(err);
-    res.status(500).send('Server Error');
+    console.error('❌ Failed to fetch course:', err);
+    res.status(500).json({ success: false, message: 'Server Error' });
   }
 });
 
-// ✅ Handle Edit Submission
+
+// ✅ Handle Edit Submission (JSON API)
 router.post('/admin/edit/:id', async (req, res) => {
   const {
     imageUrl = '',
@@ -83,36 +86,35 @@ router.post('/admin/edit/:id', async (req, res) => {
     adminPassword = ''
   } = req.body;
 
-  const course = await Course.findById(req.params.id);
-
-  if (adminPassword !== process.env.ADMIN_PASSWORD) {
-    return res.render('admin/edit-course', {
-      course,
-      error: 'Invalid admin password',
-    });
-  }
-
-  if (!imageUrl || !title || !shortDescription || !longDesciption) {
-    return res.render('admin/edit-course', {
-      course,
-      error: 'All fields are required',
-    });
-  }
-
   try {
+    const course = await Course.findById(req.params.id);
+    if (!course) {
+      return res.status(404).json({ success: false, message: 'Course not found' });
+    }
+
+    if (adminPassword !== process.env.ADMIN_PASSWORD) {
+      return res.status(401).json({ success: false, message: 'Invalid admin password' });
+    }
+
+    if (!imageUrl || !title || !shortDescription || !longDesciption) {
+      return res.status(400).json({ success: false, message: 'All fields are required' });
+    }
+
     await Course.findByIdAndUpdate(req.params.id, {
       imageUrl,
       title,
       shortDescription,
-      longDesciption
+      longDesciption,
     });
 
-    res.redirect('/');
+    return res.status(200).json({ success: true, message: 'Course updated successfully' });
+
   } catch (err) {
-    console.error(err);
-    res.status(500).send('Server Error');
+    console.error('❌ Edit Error:', err);
+    return res.status(500).json({ success: false, message: 'Server error' });
   }
 });
+
 
 
 // ✅ API route for frontend (JSON response)

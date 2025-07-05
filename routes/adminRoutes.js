@@ -36,16 +36,17 @@ router.post('/add', async (req, res) => {
   }
 });
 
-// Show Edit Form
 router.get('/edit/:id', async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
-    if (!course) return res.status(404).send('Course not found');
+    if (!course) {
+      return res.status(404).json({ success: false, message: 'Course not found' });
+    }
 
-    res.render('admin/edit-course', { course, error: null });
+    res.json({ success: true, course });
   } catch (err) {
     console.error(err);
-    res.status(500).send('Server Error');
+    res.status(500).json({ success: false, message: 'Server Error' });
   }
 });
 
