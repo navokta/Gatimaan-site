@@ -1,5 +1,6 @@
 import React from 'react';
 import './NewsSection.css'; // Include your styles
+import { Link } from 'react-router-dom';
 
 const NewsSection = ({ newsList = [] }) => {
   const sortedNews = [...newsList].sort(
@@ -122,9 +123,9 @@ const NewsSection = ({ newsList = [] }) => {
 
               {/* See More Button */}
               <div className="gc-news-see-more">
-                <a href="/news" className="gc-see-more-button">
+                <Link to="/news" className="gc-see-more-button">
                   See All Updates
-                </a>
+                </Link>
               </div>
             </>
           ) : (
