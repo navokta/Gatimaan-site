@@ -48,56 +48,6 @@ app.use('/admin', newsAdminRoutes);       // Admin news actions (React)
 app.use('/', newsRoutes);             // News API (React)
 
 
-// SSR Page Routes (Optional if using EJS frontend)
-app.get('/', async (req, res) => {
-  try {
-    const [admitCards, admissions, results, courses, newsList] = await Promise.all([
-      News.find({ category: 'Admit Card' }).limit(5),
-      News.find({ category: 'Admission' }).limit(5),
-      News.find({ category: 'Result' }).limit(5),
-      Course.find(),
-      News.find().sort({ _id: -1 })
-    ]);
-
-    res.render('layout/boilerplate', {
-      admitCards,
-      admissions,
-      results,
-      courses,
-      newsList,
-      currentPath: req.path
-    });
-  } catch (err) {
-    console.error('❌ Error rendering home page:', err);
-    res.status(500).send("Server Error");
-  }
-});
-
-app.get('/layout/about', (req, res) => {
-  res.render('layout/about', { currentPath: req.path });
-});
-
-app.get('/layout/contact', (req, res) => {
-  res.render('layout/contact', { currentPath: req.path });
-});
-
-app.get('/layout/courses', async (req, res, next) => {
-  try {
-    const courses = await Course.find();
-    res.render('layout/courses-page.ejs', { courses, currentPath: req.path });
-  } catch (err) {
-    next(err);
-  }
-});
-
-app.get('/news', async (req, res) => {
-  try {
-    const newsList = await News.find().sort({ _id: -1 });
-    res.render('news', { newsList });
-  } catch (error) {
-    res.status(500).send('Server Error');
-  }
-});
 
 // Start server
 app.listen(5000, () => {
