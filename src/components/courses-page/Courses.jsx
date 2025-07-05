@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './Courses.css';
 
+const BASE_URL = import.meta.env.VITE_API_BASE || "https://gatimaan-site.onrender.com";
+
 const CourseList = () => {
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch('http://localhost:5000/courses/api'); // ✅ Backend API endpoint
+        const response = await fetch(`${BASE_URL}/courses/api`);
         const data = await response.json();
         setCourses(data);
       } catch (error) {

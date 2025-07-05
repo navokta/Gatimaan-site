@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './ReadMore.css';
 
+const BASE_URL = import.meta.env.VITE_API_BASE || "https://gatimaan-site.onrender.com";
+
 const CourseDetails = () => {
   const { id } = useParams();
   const [course, setCourse] = useState(null);
   const [faqs, setFaqs] = useState([
-      {
+    {
       question: "Do I need any prior knowledge before using this platform?",
       answer: "Not at all. Our consultancy is built for all students—whether you're just starting or need guidance at any stage."
     },
@@ -23,10 +25,9 @@ const CourseDetails = () => {
       answer: "Most of our resources are free. Some advanced services or personalized consulting may have a minimal fee, which will be clearly mentioned."
     }
   ]);
-  
 
   useEffect(() => {
-    fetch(`http://localhost:5000/courses/api/${id}`)
+    fetch(`${BASE_URL}/courses/api/${id}`)
       .then(res => res.json())
       .then(data => {
         setCourse(data);
@@ -79,26 +80,26 @@ const CourseDetails = () => {
             <p>{course.longDesciption}</p>
           </section>
 
-             <section className="eligibility-card">
-      <h2 className="eligibility-title">Eligibility Criteria</h2>
-      <div className="eligibility-list">
-        <div className="eligibility-item">
-          <div className="eligibility-content">
-            <h3 className="eligibility-heading">1. 10+2 (Intermediate)</h3>
-            <p className="eligibility-text">Minimum 50% Marks required</p>
-          </div>
-        </div>
-        <div className="eligibility-item">
-          <div className="eligibility-content">
-            <h3 className="eligibility-heading">2. Bachelor's Degree</h3>
-            <p className="eligibility-text">Minimum 50% Marks required</p>
-          </div>
-        </div>
-        <div className="eligibility-note">
-          *Note: Eligibility criteria may vary based on state regulations and university guidelines.
-        </div>
-      </div>
-    </section>
+          <section className="eligibility-card">
+            <h2 className="eligibility-title">Eligibility Criteria</h2>
+            <div className="eligibility-list">
+              <div className="eligibility-item">
+                <div className="eligibility-content">
+                  <h3 className="eligibility-heading">1. 10+2 (Intermediate)</h3>
+                  <p className="eligibility-text">Minimum 50% Marks required</p>
+                </div>
+              </div>
+              <div className="eligibility-item">
+                <div className="eligibility-content">
+                  <h3 className="eligibility-heading">2. Bachelor's Degree</h3>
+                  <p className="eligibility-text">Minimum 50% Marks required</p>
+                </div>
+              </div>
+              <div className="eligibility-note">
+                *Note: Eligibility criteria may vary based on state regulations and university guidelines.
+              </div>
+            </div>
+          </section>
         </div>
 
         <div className="course-right">
@@ -129,32 +130,32 @@ const CourseDetails = () => {
         </div>
       </main>
 
-        <section className="faq-section">
-      <div className="faq-header">
-        <h2>Frequently Asked Questions</h2>
-        <p>Find answers to common questions about the course</p>
-      </div>
+      <section className="faq-section">
+        <div className="faq-header">
+          <h2>Frequently Asked Questions</h2>
+          <p>Find answers to common questions about the course</p>
+        </div>
 
-      <div className="faq-list">
-        {faqs.map((faq, index) => (
-          <div className="faq-item" key={index}>
-            <div
-              className="faq-question"
-              onClick={e => {
-                e.currentTarget.nextSibling.classList.toggle("hidden");
-                e.currentTarget.querySelector("i")?.classList.toggle("rotate");
-              }}
-            >
-              <h3>{faq.question}</h3>
-              <i className="fas fa-chevron-down"></i>
+        <div className="faq-list">
+          {faqs.map((faq, index) => (
+            <div className="faq-item" key={index}>
+              <div
+                className="faq-question"
+                onClick={e => {
+                  e.currentTarget.nextSibling.classList.toggle("hidden");
+                  e.currentTarget.querySelector("i")?.classList.toggle("rotate");
+                }}
+              >
+                <h3>{faq.question}</h3>
+                <i className="fas fa-chevron-down"></i>
+              </div>
+              <div className="faq-answer hidden">
+                <p>{faq.answer}</p>
+              </div>
             </div>
-            <div className="faq-answer hidden">
-              <p>{faq.answer}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
+          ))}
+        </div>
+      </section>
     </div>
   );
 };

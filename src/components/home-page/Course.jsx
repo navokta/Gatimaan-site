@@ -4,6 +4,8 @@ import "aos/dist/aos.css";
 import AOS from "aos";
 import './Course.css';
 
+const BASE_URL = import.meta.env.VITE_API_BASE || "https://gatimaan-site.onrender.com";
+
 const CoursesSection = () => {
   const [courses, setCourses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -13,7 +15,7 @@ const CoursesSection = () => {
 
     const fetchCourses = async () => {
       try {
-        const response = await fetch("http://localhost:5000/courses/api/courses");
+        const response = await fetch(`${BASE_URL}/courses/api/courses`);
         const data = await response.json();
         setCourses(data);
       } catch (error) {
@@ -30,10 +32,10 @@ const CoursesSection = () => {
     <section className="courses-section">
       <div className="container">
         <div className="section-info">
-        <h2 className="section-title">
-          Explore Our <span className="highlight">Courses</span>
-        </h2>
-        <p className="section-subtitle">Discover the perfect learning path for you</p>
+          <h2 className="section-title">
+            Explore Our <span className="highlight">Courses</span>
+          </h2>
+          <p className="section-subtitle">Discover the perfect learning path for you</p>
         </div>
 
         {isLoading ? (
@@ -44,43 +46,42 @@ const CoursesSection = () => {
         ) : courses.length > 0 ? (
           <>
             <div className="courses-container">
-  {[...courses]
-    .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)) // Oldest First
-    .slice(0, 6)
-    .map((course, index) => (
-      <div
-        className="course-card-wrapper"
-        style={{ animationDelay: `${index * 0.1}s` }}
-        key={course._id}
-        data-aos="fade-up"
-        data-aos-delay={index * 50}
-      >
-        <div className="course-card">
-          <div className="image-container">
-            <img
-              src={course.imageUrl || "https://placehold.co/600x400"}
-              className="course-image"
-              alt={course.title}
-              loading="lazy"
-            />
-          </div>
-          <div className="card-body">
-            <h5 className="card-title">{course.title}</h5>
-            <p className="card-text">{course.shortDescription}</p>
-            <div className="card-footer">
-              <Link to={`/courses/${course._id}`} className="read-more-btn">
-                Explore Course
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-              </Link>
+              {[...courses]
+                .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)) // Oldest First
+                .slice(0, 6)
+                .map((course, index) => (
+                  <div
+                    className="course-card-wrapper"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                    key={course._id}
+                    data-aos="fade-up"
+                    data-aos-delay={index * 50}
+                  >
+                    <div className="course-card">
+                      <div className="image-container">
+                        <img
+                          src={course.imageUrl || "https://placehold.co/600x400"}
+                          className="course-image"
+                          alt={course.title}
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="card-body">
+                        <h5 className="card-title">{course.title}</h5>
+                        <p className="card-text">{course.shortDescription}</p>
+                        <div className="card-footer">
+                          <Link to={`/courses/${course._id}`} className="read-more-btn">
+                            Explore Course
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
             </div>
-          </div>
-        </div>
-      </div>
-    ))}
-</div>
-
 
             <div className="explore-more" data-aos="fade-up">
               <Link to="/layout/courses" className="explore-btn">

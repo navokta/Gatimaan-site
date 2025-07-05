@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./Editcourse.css";
 
+const BASE_URL = import.meta.env.VITE_API_BASE || "https://gatimaan-site.onrender.com";
+
 const Editcourse = () => {
   const { id } = useParams();
 
@@ -17,7 +19,7 @@ const Editcourse = () => {
   const [success, setSuccess] = useState("");
 
   useEffect(() => {
-    fetch(`http://localhost:5000/courses/admin/edit/${id}`)
+    fetch(`${BASE_URL}/courses/admin/edit/${id}`)
       .then((res) => res.json())
       .then((data) => {
         if (!data.success) {
@@ -42,7 +44,7 @@ const Editcourse = () => {
     setSuccess("");
 
     try {
-      const res = await fetch(`http://localhost:5000/courses/admin/edit/${id}`, {
+      const res = await fetch(`${BASE_URL}/courses/admin/edit/${id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -53,7 +55,7 @@ const Editcourse = () => {
         setError(result.message || "Failed to update course.");
       } else {
         setSuccess("Course updated successfully!");
-        setForm((prev) => ({ ...prev, adminPassword: "" })); // clear password
+        setForm((prev) => ({ ...prev, adminPassword: "" }));
       }
     } catch {
       setError("Update failed due to server error.");
