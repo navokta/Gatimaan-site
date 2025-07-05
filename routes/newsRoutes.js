@@ -89,4 +89,13 @@ router.post('/add-news', async (req, res) => {
   }
 });
 
+router.get('/api/news', async (req, res) => {
+  try {
+    const newsList = await News.find().sort({ createdAt: -1 });
+    res.json(newsList);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 export default router;

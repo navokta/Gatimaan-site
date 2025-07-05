@@ -5,21 +5,25 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { fileURLToPath } from 'url';
 
-// import courseRoutes from '../routes/courseRoutes.js';
-import newsRouter from '../routes/newsRoutes.js';
-import News from '../models/News.js';
-import Course from '../models/courses.model.js';
+// Route files
+import newsAdminRoutes from '../routes/newsAdminRoutes.js';
 import courseRoutes from '../routes/courseRoutes.js';
 import adminRoutes from '../routes/adminRoutes.js';
+import newsRoutes from '../routes/newsRoutes.js';
+
+// Models
+import News from '../models/News.js';
+import Course from '../models/courses.model.js';
 
 dotenv.config();
 
 const app = express();
 
-// Required to resolve __dirname in ES modules
+// Resolve __dirname in ES module
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ Connected to MongoDB'))
   .catch((err) => {
@@ -27,25 +31,24 @@ mongoose.connect(process.env.MONGO_URI)
     process.exit(1);
   });
 
+// View engine setup (for EJS-based pages, optional if React only)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../views'));
 
+// Middleware
 app.use(cors());
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// app.use('/courses', courseRoutes);
-// app.use('/admin', adminRoutes);
-app.use('/courses', courseRoutes); // for API
-app.use('/admin', adminRoutes); // for admin logic
-app.use('/', newsRouter);
-app.set('views', path.join(__dirname, '../views'));
-
-
-
-
 // Routes
+app.use('/courses', courseRoutes);        // API for course listing
+app.use('/admin', adminRoutes);           // Admin course actions (React)
+app.use('/admin', newsAdminRoutes);       // Admin news actions (React)
+app.use('/', newsRoutes);             // News API (React)
+
+
+// SSR Page Routes (Optional if using EJS frontend)
 app.get('/', async (req, res) => {
   try {
     const [admitCards, admissions, results, courses, newsList] = await Promise.all([
@@ -96,10 +99,9 @@ app.get('/news', async (req, res) => {
   }
 });
 
-
+// Start server
 app.listen(5000, () => {
   console.log('✅ Server running at http://localhost:5000');
 });
-
 
 export default app;

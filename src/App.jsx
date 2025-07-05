@@ -14,6 +14,7 @@ import Contact from './pages/Contact';
 import CourseDetails from './components/courses-page/ReadMore'; // Adjust path if needed
 import Addcourse from './components/Admin/Addcourse'
 import Editcourse from './components/Admin/Editcourse'
+import AddNews from './components/Admin/Addnews';
 
 
 const router = createBrowserRouter([
@@ -92,6 +93,10 @@ const router = createBrowserRouter([
       <Editcourse />
     </>
   ),
+},
+{
+  path: "/admin/add-news",
+  element: <AddNews />,
 },
 {
   path: "*",
