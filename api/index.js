@@ -5,10 +5,12 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { fileURLToPath } from 'url';
 
-import courseRoutes from '../routes/courseRoutes.js';
+// import courseRoutes from '../routes/courseRoutes.js';
 import newsRouter from '../routes/newsRoutes.js';
 import News from '../models/News.js';
 import Course from '../models/courses.model.js';
+import courseRoutes from '../routes/courseRoutes.js';
+import adminRoutes from '../routes/adminRoutes.js';
 
 dotenv.config();
 
@@ -33,8 +35,15 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/courses', courseRoutes);
+// app.use('/courses', courseRoutes);
+// app.use('/admin', adminRoutes);
+app.use('/courses', courseRoutes); // for API
+app.use('/admin', adminRoutes); // for admin logic
 app.use('/', newsRouter);
+app.set('views', path.join(__dirname, '../views'));
+
+
+
 
 // Routes
 app.get('/', async (req, res) => {

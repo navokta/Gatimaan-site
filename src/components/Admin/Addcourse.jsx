@@ -1,125 +1,61 @@
-import React, { useState } from "react";
-import "./Addcourse.css";
+// src/components/Admin/Addcourse.jsx
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const Addcourse = () => {
-  const [form, setForm] = useState({
-    imageUrl: "",
-    title: "",
-    shortDescription: "",
-    longDesciption: "",
-    adminPassword: "",
+  const [formData, setFormData] = useState({
+    imageUrl: '',
+    title: '',
+    shortDescription: '',
+    longDesciption: '',
+    adminPassword: ''
   });
 
-  const [success, setSuccess] = useState("");
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState('');
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
- 
-    try {
-      const response = await fetch("http://localhost:5000/courses/api", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
+  const handleSubmit = async () => {
+  try {
+    const res = await fetch('http://localhost:5000/courses/admin/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
 
-      const result = await response.json();
+    const data = await res.json();
 
-      if (result.success) {
-        setSuccess(result.success);
-        setError("");
-        setForm({
-          imageUrl: "",
-          title: "",
-          shortDescription: "",
-          longDesciption: "",
-          adminPassword: "",
-        });
-      } else {
-        setError(result.error || "Something went wrong");
-        setSuccess("");
-      }
-    } catch (err) {
-      setError("Server error");
-      setSuccess("");
+    if (data.success) {
+      toast.success(data.message);
+    } else {
+      toast.error(data.message);
     }
-  };
+  } catch (err) {
+    toast.error('Something went wrong. Try again later.');
+  }
+};
 
   return (
-    <div className="ac-container">
-      <div className="ac-box">
-        <h2 className="ac-heading">Add New Course</h2>
-
-        {error && <div className="ac-error">{error}</div>}
-        {success && <div className="ac-success">{success}</div>}
-
-        <form onSubmit={handleSubmit}>
-          <div className="ac-form-group">
-            <label>Image URL</label>
+    <div className="p-6 max-w-xl mx-auto mt-10 bg-white shadow rounded">
+      <h2 className="text-2xl font-bold mb-4">Add New Course</h2>
+      {message && <p className="mb-4 text-sm">{message}</p>}
+      <form onSubmit={handleSubmit}>
+        {['imageUrl', 'title', 'shortDescription', 'longDesciption', 'adminPassword'].map((field) => (
+          <div className="mb-3" key={field}>
+            <label className="block mb-1 capitalize">{field}</label>
             <input
-              type="text"
-              name="imageUrl"
-              required
-              value={form.imageUrl}
+              type={field === 'adminPassword' ? 'password' : 'text'}
+              name={field}
+              value={formData[field]}
               onChange={handleChange}
+              className="w-full border px-2 py-1 rounded"
+              required
             />
           </div>
-
-          <div className="ac-form-group">
-            <label>Title</label>
-            <input
-              type="text"
-              name="title"
-              required
-              value={form.title}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="ac-form-group">
-            <label>Short Description</label>
-            <textarea
-              name="shortDescription"
-              rows="3"
-              required
-              value={form.shortDescription}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="ac-form-group">
-            <label>Long Description</label>
-            <textarea
-              name="longDesciption"
-              rows="5"
-              required
-              value={form.longDesciption}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="ac-form-group">
-            <label>Admin Password</label>
-            <input
-              type="password"
-              name="adminPassword"
-              required
-              value={form.adminPassword}
-              onChange={handleChange}
-            />
-          </div>
-
-          <button type="submit" className="ac-submit-button">
-            Add Course
-          </button>
-        </form>
-      </div>
+        ))}
+        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">Add Course</button>
+      </form>
     </div>
   );
 };

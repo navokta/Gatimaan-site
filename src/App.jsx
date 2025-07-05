@@ -78,7 +78,7 @@ const router = createBrowserRouter([
   ),
 },
 {
-  path: "/admin/add-courses",
+  path: "/admin/add-course",
   element: (
     <>
       <Addcourse />
@@ -92,7 +92,21 @@ const router = createBrowserRouter([
       <Editcourse />
     </>
   ),
+},
+{
+  path: "*",
+  element: (
+    <>
+      <Header />
+      <div style={{ padding: '2rem', textAlign: 'center' }}>
+        <h2>404 - Page Not Found</h2>
+        <p>Looks like this page doesn't exist.</p>
+      </div>
+      <Footer />
+    </>
+  ),
 }
+
 ]);
 
 function App() {
