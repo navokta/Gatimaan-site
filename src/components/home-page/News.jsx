@@ -29,9 +29,9 @@ const NewsSection = ({ newsList = [] }) => {
                 <table className="gc-news-table">
                   <thead>
                     <tr>
-                      <th className="gc-date-col">Date</th>
-                      <th className="gc-desc-col">Description</th>
-                      <th className="gc-action-col">Details</th>
+                      <th>Date</th>
+                      <th>Description</th>
+                      <th>Details</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -40,11 +40,15 @@ const NewsSection = ({ newsList = [] }) => {
                       return (
                         <tr key={index}>
                           <td className="gc-news-date">
-                            <span>{dateObj.getDate()}</span>
-                            <span>{dateObj.toLocaleString('en-IN', { month: 'short' })}</span>
+                            <span>{dateObj.getDate()}</span>{' '}
+                            <span>
+                              {dateObj.toLocaleString('en-IN', {
+                                month: 'short',
+                              })}
+                            </span>{' '}
                             <span>{dateObj.getFullYear()}</span>
                           </td>
-                          <td>{news.description}</td>
+                          <td className="gc-news-desc">{news.description}</td>
                           <td className="gc-news-action">
                             <a
                               href={news.newsLink}
@@ -53,8 +57,13 @@ const NewsSection = ({ newsList = [] }) => {
                               className="gc-news-link"
                             >
                               View Details
-                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                   xmlns="http://www.w3.org/2000/svg">
+                              <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
                                 <path
                                   d="M5 12H19M19 12L12 5M19 12L12 19"
                                   stroke="currentColor"
@@ -72,7 +81,7 @@ const NewsSection = ({ newsList = [] }) => {
                 </table>
               </div>
 
-              {/* Mobile Card View */}
+              {/* Mobile View */}
               <div className="gc-news-cards gc-mobile-only">
                 {limitedNews.map((news, index) => {
                   const dateObj = new Date(news.createdAt);
@@ -81,9 +90,13 @@ const NewsSection = ({ newsList = [] }) => {
                       <div className="gc-card-date">
                         <span className="gc-card-day">{dateObj.getDate()}</span>
                         <span className="gc-card-month">
-                          {dateObj.toLocaleString('en-IN', { month: 'short' })}
+                          {dateObj.toLocaleString('en-IN', {
+                            month: 'short',
+                          })}
                         </span>
-                        <span className="gc-card-year">{dateObj.getFullYear()}</span>
+                        <span className="gc-card-year">
+                          {dateObj.getFullYear()}
+                        </span>
                       </div>
                       <div className="gc-card-content">
                         <p className="gc-card-desc">{news.description}</p>
@@ -94,8 +107,13 @@ const NewsSection = ({ newsList = [] }) => {
                           className="gc-card-link"
                         >
                           View Details
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                               xmlns="http://www.w3.org/2000/svg">
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
                             <path
                               d="M5 12H19M19 12L12 5M19 12L12 19"
                               stroke="currentColor"
@@ -111,7 +129,6 @@ const NewsSection = ({ newsList = [] }) => {
                 })}
               </div>
 
-              {/* See More Button */}
               <div className="gc-news-see-more">
                 <Link to="/news" className="gc-see-more-button">
                   See All Updates

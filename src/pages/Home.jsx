@@ -7,6 +7,9 @@ import Scroll from "../components/home-page/Horizontal_scrolling";
 import Testimonial from "../components/home-page/Testimonial";
 import WhatsappIcon from "../components/common/Whatsappicon";
 
+// Use environment variable or fallback to Render URL
+const BASE_URL = import.meta.env.VITE_API_BASE || "https://gatimaan-site.onrender.com";
+
 const Home = () => {
   const [newsList, setNewsList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +17,7 @@ const Home = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/news");
+        const response = await fetch(`${BASE_URL}/api/news`);
         const data = await response.json();
         setNewsList(data);
       } catch (err) {
@@ -31,7 +34,6 @@ const Home = () => {
     <div>
       <Carousel />
       <CoursesSection />
-      {/* Pass the fetched newsList to NewsSection */}
       <NewsSection newsList={newsList} />
       <Feed />
       <Scroll />
