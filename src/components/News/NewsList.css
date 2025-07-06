@@ -2,13 +2,18 @@
   max-width: 1000px;
   margin: auto;
   padding: 20px;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  margin-top: 20px;
 }
 
 .news-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  min-width: 700px; /* Force horizontal scroll if smaller */
 }
 
 .news-table th,
@@ -31,4 +36,16 @@
 .error {
   color: red;
   margin-top: 10px;
+}
+
+@media (max-width: 480px) {
+  .news-table th,
+  .news-table td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .news-table-container h2 {
+    font-size: 18px;
+  }
 }
